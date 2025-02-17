@@ -1,0 +1,4 @@
+[submodule "FlamingoHelper/external/flamingo-sc"]
+	path = FlamingoHelper/external/flamingo-sc
+	url = https://github.com/flamingo-finance/flamingo-sc-monorepo.git
+	branch = testnet-preview

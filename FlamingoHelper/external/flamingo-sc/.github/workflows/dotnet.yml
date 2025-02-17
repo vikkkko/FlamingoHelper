@@ -1,0 +1,60 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  build_and_test:
+    name: Build and Test
+
+    runs-on: ubuntu-latest
+
+    env:
+      ROOT_DIR: ${{ github.workspace }}/
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+
+    - name: Install npm packages
+      run: npm install
+
+    - name: Build neo-devpack-dotnet
+      run: |
+        dotnet build neo-devpack-dotnet/src/Neo.Compiler.CSharp/Neo.Compiler.CSharp.csproj
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build projects in src directory
+      run: |
+        for project in $(find src -name "*.csproj"); do
+          dotnet build "$project" --no-restore
+        done
+
+    - name: Build test projects
+      run: |
+        for project in $(find tests -name "*.csproj"); do
+          dotnet build "$project" --no-restore
+        done
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal

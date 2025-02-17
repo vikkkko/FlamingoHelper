@@ -1,0 +1,3 @@
+[submodule "neo-devpack-dotnet"]
+	path = neo-devpack-dotnet
+	url = https://github.com/neo-project/neo-devpack-dotnet.git

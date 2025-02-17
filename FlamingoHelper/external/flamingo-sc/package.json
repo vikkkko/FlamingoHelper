@@ -1,0 +1,38 @@
+{
+	"name": "flamingo-sc-monorepo",
+	"version": "1.0.0",
+	"description": "The monorepo for all the smart contracts for Flamingo Finance on Neo N3.",
+	"scripts": {
+		"contracts:restore": "dotnet restore",
+		"contracts:build": "dotnet build",
+		"contracts:signgroups": "node ./utils/sign-groups.js",
+		"format:contracts": "dotnet format",
+		"format:prettier": "npx prettier . --write",
+		"format:all": "npm run format:prettier && npm run format:contracts",
+		"testnetctl": "node ./utils/testnet-ctl.js",
+		"localnet:start": "npm run localnet:reset && dotnet neoxp run --input=./localnet.neo-express --seconds-per-block=1",
+		"localnet:policy": "dotnet neoxp policy set ExecutionFeeFactor 1 genesis --input=./localnet.neo-express && dotnet neoxp policy set StorageFeeFactor 1000 genesis --input=./localnet.neo-express && dotnet neoxp policy set NetworkFeePerByte 20 genesis --input=./localnet.neo-express",
+		"localnet:transfer": "dotnet neoxp transfer 1000 gas genesis SuperAdmin --input=./localnet.neo-express && dotnet neoxp transfer 1000 gas genesis Alice --input=./localnet.neo-express && dotnet neoxp transfer 1000 gas genesis Bob --input=./localnet.neo-express",
+		"localnet:init": "npm run localnet:policy && npm run localnet:transfer && node ./localnet.neo-express.js",
+		"localnet:stop": "dotnet neoxp stop --input=./localnet.neo-express",
+		"localnet:reset": "dotnet neoxp reset --input=./localnet.neo-express --force"
+	},
+	"dependencies": {
+		"@cityofzion/neon-js": "^5.6.0",
+		"yargs": "^17.7.2"
+	},
+	"devDependencies": {
+		"prettier": "3.2.5"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/flamingo-finance/flamingo-sc-monorepo.git"
+	},
+	"bugs": {
+		"url": "https://github.com/flamingo-finance/flamingo-sc-monorepo/issues"
+	},
+	"homepage": "https://github.com/flamingo-finance/flamingo-sc-monorepo#readme"
+}

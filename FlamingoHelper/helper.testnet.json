@@ -1,0 +1,21 @@
+{
+  "network": "testnet",
+  "url": "http://seed1t5.neo.org:20332",
+  "deployedContracts": {
+    "FlamingoBroker": "0xd945631aa56f7c1aa63da029b6751974f7881974",
+    "FlamingoSwapPairWhiteList": "0x7858d005627db9449c227c9f2e54e75cb4e1e4e7",
+    "FlamingoSwapFactory": "0x7b14a26e604528ffceaccecbd3700c14e2ce6c25",
+    "FlamingoSwapRouter": "0x13acfd8189ea36eb3a0eef8e8a04b34c89763a01",
+    "FlamingoSwapPair": [
+      {
+        "name": "FLPTEST2USDCrc7",
+        "baseToken": "0xf419d6f93da6de039e5d84f644680ddb86d6bfdf",
+        "quoteToken": "0xe62176f6b6a77439a834a4bfddb8bd41e2bf0b53",
+        "hash": "0x54c692dd3bd4c70fe2467f5a470fedd5396c3099",
+        "pairId": 1,
+        "treeBitLength": "16",
+        "pricePrecision": "10000000000"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "network": "mainnet",
+    "url": "https://n3seed2.ngd.network:10332",
+    "deployedContracts": {
+      "FlamingoBroker": "0xe2f58f0ec2e95b88bdc90bcc75a321605c5106ae",
+      "FlamingoSwapPairWhiteList": "0x0711845a797c19f59d7017e52c8525d4b02cdde5",
+      "FlamingoSwapFactory": "0x543b3b52b24975403bf2db1778a9057030eda33b",
+      "FlamingoSwapRouter": "0x3b2405c8491ab42ccacf78a82cd5069b6ccacebb"
+    }
+}  
