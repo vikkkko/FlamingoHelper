@@ -1,3 +1,4 @@
+using System.Text;
 using Neo;
 using Neo.Network.P2P.Payloads;
 using Neo.Network.RPC;
@@ -33,6 +34,43 @@ namespace FlamingoHelper
             }
             return _instance;
         }   
+
+        #region get
+        public string GetVersion()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {   
+                sb.EmitDynamicCall(Hash, "getVersion");
+                script = sb.ToArray();
+            }
+            return Encoding.UTF8.GetString(Convert.FromBase64String((string)Util.InvokeScript(_rpcClient, script)));
+        }
+
+        public string GetAdmin()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getAdmin");
+                script = sb.ToArray();
+            }
+            return Util.GetUInt160FromBase64String((string)Util.InvokeScript(_rpcClient, script)).ToString();
+        }
+
+        public string GetExchangePair(UInt160 tokenA, UInt160 tokenB)
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getExchangePair", tokenA, tokenB);    
+                script = sb.ToArray();
+            }
+            return Util.GetUInt160FromBase64String((string)Util.InvokeScript(_rpcClient, script)).ToString();
+        }
+        
+        #endregion
+        
 
         public byte[] CreateExchangePair(UInt160 tokenA, UInt160 tokenB, UInt160 exchangeContractHash, bool send = true, byte[] _script = null)
         {

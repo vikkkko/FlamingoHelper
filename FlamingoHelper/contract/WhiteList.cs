@@ -38,6 +38,42 @@ namespace FlamingoHelper
             return _instance;
         }
 
+
+        #region get
+        public string GetVersion()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {   
+                sb.EmitDynamicCall(Hash, "getVersion");
+                script = sb.ToArray();
+            }
+            return Encoding.UTF8.GetString(Convert.FromBase64String((string)Util.InvokeScript(_rpcClient, script)));
+        }   
+
+        public string GetAdmin()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getAdmin");
+                script = sb.ToArray();
+            }
+            return Util.GetUInt160FromBase64String((string)Util.InvokeScript(_rpcClient, script)).ToString();
+        }
+
+        public bool CheckRouter(UInt160 router)   
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "checkRouter", router);
+                script = sb.ToArray();
+            }   
+            return (bool)Util.InvokeScript(_rpcClient, script);
+        }
+        #endregion
+
         public byte[] AddRouter(UInt160 router, bool send = true, byte[] _script = null)
         {
             byte[] script = _script ?? new byte[0];

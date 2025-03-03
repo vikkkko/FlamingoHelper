@@ -3,6 +3,13 @@ using Neo.Wallets;
 using Newtonsoft.Json;
 using Neo.SmartContract.Native;
 using Neo;
+using Neo.IO;
+using Neo.SmartContract;
+using System.Text;
+using Neo.SmartContract.Manifest;
+using Neo.VM;
+using Neo.Network.P2P.Payloads;
+using System.Numerics;
 
 namespace FlamingoHelper
 {
@@ -47,6 +54,21 @@ namespace FlamingoHelper
                 }
             }
             File.WriteAllText(helperPath, JsonConvert.SerializeObject(helper, Formatting.Indented));
+        }
+
+        public byte[] SetWhiteListContract(UInt160 whiteListContract, bool send = true, byte[] _script = null)
+        {
+            var script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "setWhiteListContract", whiteListContract);
+                script = script.Concat(sb.ToArray()).ToArray();
+            }
+            if(send){
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }
+            return script;
         }
     }           
 }

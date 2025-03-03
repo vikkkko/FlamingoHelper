@@ -16,7 +16,7 @@ namespace FlamingoHelper
         public RpcClient _rpcClient;
         public KeyPair keyPair;
         public UInt160 Hash;
-        public string BasePath = "/external/flamingo-sc/src/";
+        public string BasePath = "/external/flamingo-sc-monorepo/src/";
         public string _Path;
         public virtual string selfPath => throw new NotImplementedException();
         public virtual string fileName => throw new NotImplementedException();
@@ -39,6 +39,12 @@ namespace FlamingoHelper
             Hash = Util.DeployContract(_Path, _fileName, _rpcClient, keyPair);
             UpdateHash(network, _fileName, Hash);
             return Hash;
+        }   
+
+        public virtual void Update(string network = "testnet", string _fileName = null)
+        {
+            _fileName = _fileName ?? fileName;
+            Util.UpdateContract(Hash, null, _Path, _fileName, _rpcClient, keyPair);
         }
 
         public virtual void UpdateHash(string network, string fileName, UInt160 hash)

@@ -5,6 +5,8 @@ using Neo.SmartContract;
 using Neo.VM;
 using Neo.Wallets;
 using System.Numerics;
+using System.Text;
+
 namespace FlamingoHelper
 {
     public class Broker : BaseContract
@@ -43,9 +45,63 @@ namespace FlamingoHelper
                 sb.EmitDynamicCall(Hash, "getPairCounter");
                 script = sb.ToArray();
             }
-    
-            return BigInteger.Parse(Util.InvokeScript(_rpcClient, script));
+
+            return BigInteger.Parse((string)Util.InvokeScript(_rpcClient, script));
         }   
+        #endregion
+
+        public override void Update(string network = "testnet", string _fileName = null)
+        {
+            _fileName = _fileName ?? fileName;
+            Util.UpdateContract(Hash, 0, _Path, _fileName, _rpcClient, keyPair);
+        }
+
+
+        #region get
+        public string GetVersion()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getVersion");
+                script = sb.ToArray();
+            }
+            return Encoding.UTF8.GetString(Convert.FromBase64String((string)Util.InvokeScript(_rpcClient, script)));
+        }
+
+        public string GetAMMRouter()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getAMMRouter");
+                script = sb.ToArray();
+            }
+            return Util.GetUInt160FromBase64String((string)Util.InvokeScript(_rpcClient, script)).ToString();
+        }
+
+        public string GetAMMFactory()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getAMMFactory");
+                script = sb.ToArray();
+            }
+            return Util.GetUInt160FromBase64String((string)Util.InvokeScript(_rpcClient, script)).ToString();
+        }
+
+        public string GetOwner()
+        {
+            byte[] script;
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "getOwner");
+                script = sb.ToArray();
+            }
+            return Util.GetUInt160FromBase64String((string)Util.InvokeScript(_rpcClient, script)).ToString();
+        }
+
         #endregion
 
         public byte[] ChangeAMMFactory(UInt160 newAMMFactory, bool send = true, byte[] _script = null)
@@ -251,6 +307,70 @@ namespace FlamingoHelper
 
                 Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair); 
             }   
+            return script;
+        }
+
+        public byte[] Deposit(UInt160 user, UInt160 token, BigInteger amount, bool send = true, byte[] _script = null)
+        {
+            byte[] script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "deposit", user, token, amount);
+                script = script.Concat(sb.ToArray()).ToArray();
+            }
+            if(send)
+            {
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }   
+            return script;
+        }
+
+        public byte[] Withdraw(UInt160 user, UInt160 token, BigInteger amount, bool send = true, byte[] _script = null)
+        {
+            byte[] script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "withdraw", user, token, amount);  
+                script = script.Concat(sb.ToArray()).ToArray();     
+            }
+            if(send)
+            {
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }
+            return script;
+        }
+
+        public byte[] CreateLimitSellOrderUsingBase(UInt160 user, BigInteger pairId, BigInteger baseAmount, BigInteger limitPrice, BigInteger userDefinedId, bool useAMM, bool debug, bool send = true, byte[] _script = null)
+        {
+            byte[] script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "createLimitSellOrderUsingBase", user, pairId, baseAmount, limitPrice, userDefinedId, useAMM, debug);
+                script = script.Concat(sb.ToArray()).ToArray();
+            }
+            if(send)
+            {
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }   
+            return script;
+        }     
+
+        public byte[] ExecuteLimitSellOrderUsingBase(UInt160 user, BigInteger pairId, BigInteger baseAmount, BigInteger limitPrice, BigInteger userDefinedId, bool useAMM, bool debug, bool send = true, byte[] _script = null)
+        {
+            byte[] script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "executeLimitSellOrderUsingBase", user, pairId, baseAmount, limitPrice, userDefinedId, useAMM, debug);
+                script = script.Concat(sb.ToArray()).ToArray();
+            }
+            if(send)
+            {
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }
             return script;
         }
     }

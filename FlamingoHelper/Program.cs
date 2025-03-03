@@ -39,7 +39,7 @@ namespace FlamingoHelper
 
             //args[1] 是操作指令 deploy代表重新部署并初始化合约, test表示运行测试程序
             string action = args[1];
-            if (action != "deploy" && action != "test" && action != "deployPair" && action != "execute")
+            if (action != "deploy" && action != "test" && action != "deployPair" && action != "execute" && action != "update" && action != "check")
             {
                 Console.WriteLine("操作错误");
                 return;
@@ -70,13 +70,20 @@ namespace FlamingoHelper
                 Deploy deploy = new Deploy(helperConfig, envConfigDict);
                 deploy.Do(env, args[2]);
             }
+            else if(action == "update"){
+                Update update = new Update(helperConfig, envConfigDict);
+                update.Do(env, args[2]);
+            }
             else if(action == "deployPair"){
                 DeployPair deployPair = new DeployPair(helperConfig, envConfigDict);
                 deployPair.Do(env,  BigInteger.Parse(args[2]), args.Length > 3 ? args[3] : "");
             }
             else if(action == "execute"){
                 Execute execute = new Execute(helperConfig, envConfigDict);
-                execute.Do(env, args[2], args.Length > 3 ? BigInteger.Parse(args[3]) : 0);
+                execute.Do(env, args[2], args.Length > 3 ? BigInteger.Parse(args[3]) : 0, args.Length > 4 ? args[4] : "", args.Length > 5 ? args[5] : "");
+            } else if (action == "check"){
+                Check check = new Check(helperConfig, envConfigDict);
+                check.Do(env);
             }
         }
     }
