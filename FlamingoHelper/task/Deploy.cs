@@ -36,8 +36,6 @@ namespace FlamingoHelper
                 Do(network, "SwapPairWhiteList");
                 Do(network, "SwapFactory");
                 Do(network, "SwapRouter");
-
-
             }
             else if (contractName == "Broker")
             {

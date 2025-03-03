@@ -32,7 +32,7 @@ namespace FlamingoHelper
             }
         }
 
-        public void Do(string network, string action, BigInteger pairId)
+        public void Do(string network, string action, BigInteger pairId, params object[] args)
         {
             var helperConfig = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(Path.Combine(Util.GetProjectDirectory(), $"helper.{network}.json")));
             var brokerHash = helperConfig.deployedContracts["FlamingoBroker"].ToString();
@@ -68,6 +68,12 @@ namespace FlamingoHelper
                 if(currentPairCounter != pairId){
                     throw new Exception("pairId not match");
                 }
+                Pair.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(pair.hash.ToString()));
+                
+                
+                Factory.GetInstance(rpcClient, keyPair).CreateExchangePair(UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), UInt160.Parse(pair.hash.ToString()));
+                Pair.GetInstance(rpcClient, keyPair).SetWhiteListContract(UInt160.Parse(whiteListHash));
+
                 var bytes = Broker.GetInstance(rpcClient, keyPair).AddPair(UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), BigInteger.Parse(pair.treeBitLength.ToString()), BigInteger.Parse(pair.pricePrecision.ToString()), false);
                 bytes = Broker.GetInstance(rpcClient, keyPair).UnpausePairOrderTrading(pairId, false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).UnpausePairOrderManagement(pairId, false, bytes);
@@ -123,6 +129,43 @@ namespace FlamingoHelper
                 Broker.GetInstance(rpcClient, keyPair).SetGasToBurn(pairId, 3600000);
                 return;
             }
+
+            if(action == "resetRouterBroker"){
+                var sender = keyPair.GetScriptHash().ToString();
+                Router.GetInstance(rpcClient, keyPair).SetBrokerContract(Broker.GetInstance(rpcClient, keyPair).Hash);
+                return;
+            }
+
+            if(action == "addLiquidity"){
+                var sender = keyPair.GetScriptHash().ToString();
+                Router.GetInstance(rpcClient, keyPair).AddLiquidity(UInt160.Parse(sender), UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), BigInteger.Parse(args[0].ToString()), BigInteger.Parse(args[1].ToString()), 0, 0);
+                return;
+            }
+
+            if(action == "depositToBroker"){
+                var sender = keyPair.GetScriptHash().ToString();
+                Broker.GetInstance(rpcClient, keyPair).Deposit(UInt160.Parse(sender), UInt160.Parse(pair.baseToken.ToString()), BigInteger.Parse(args[0].ToString()));
+                Broker.GetInstance(rpcClient, keyPair).Deposit(UInt160.Parse(sender), UInt160.Parse(pair.quoteToken.ToString()), BigInteger.Parse(args[1].ToString()));
+                return;
+            }
+
+            if(action == "sell0"){
+                var sender = keyPair.GetScriptHash().ToString();
+                Router.GetInstance(rpcClient, keyPair).SwapTokenInForTokenOut(966735800000, 0, new UInt160[] { UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()) }, 999999999999999);
+                return;
+            }
+
+            if(action == "sell1"){
+                var sender = keyPair.GetScriptHash().ToString();
+                Broker.GetInstance(rpcClient, keyPair).CreateLimitSellOrderUsingBase(UInt160.Parse(sender), pairId, BigInteger.Parse(args[0].ToString()), BigInteger.Parse(args[1].ToString()), 0, true, false);
+                return;
+            }   
+
+            if(action == "sell2"){
+                var sender = keyPair.GetScriptHash().ToString();
+                Broker.GetInstance(rpcClient, keyPair).ExecuteLimitSellOrderUsingBase(UInt160.Parse(sender), pairId, BigInteger.Parse(args[0].ToString()), BigInteger.Parse(args[1].ToString()), 0, true, false);
+                return;
+            }   
         }   
     }       
 }
