@@ -45,9 +45,9 @@ namespace FlamingoHelper
                 sb.EmitDynamicCall(Hash, "getPairCounter");
                 script = sb.ToArray();
             }
-
-            return BigInteger.Parse((string)Util.InvokeScript(_rpcClient, script));
-        }   
+            var result = Util.InvokeScript(_rpcClient, script);
+            return BigInteger.Parse(((Neo.Json.JString)result).Value);
+        } 
         #endregion
 
         public override void Update(string network = "testnet", string _fileName = null)
@@ -371,6 +371,22 @@ namespace FlamingoHelper
                 Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
                 Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
             }
+            return script;
+        }
+
+        public byte[] AddModerator(UInt160 moderator, bool send = true, byte[] _script = null)
+        {
+            byte[] script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "addModerator", moderator);
+                script = script.Concat(sb.ToArray()).ToArray();
+            }
+            if(send)
+            {
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }   
             return script;
         }
     }

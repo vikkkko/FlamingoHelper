@@ -1,10 +1,201 @@
 {
-    "network": "mainnet",
-    "url": "https://n3seed2.ngd.network:10332",
-    "deployedContracts": {
-      "FlamingoBroker": "0xe2f58f0ec2e95b88bdc90bcc75a321605c5106ae",
-      "FlamingoSwapPairWhiteList": "0x0711845a797c19f59d7017e52c8525d4b02cdde5",
-      "FlamingoSwapFactory": "0x543b3b52b24975403bf2db1778a9057030eda33b",
-      "FlamingoSwapRouter": "0x3b2405c8491ab42ccacf78a82cd5069b6ccacebb"
-    }
-}  
+  "network": "mainnet",
+  "url": "https://n3seed2.ngd.network:10332",
+  "deployedContracts": {
+    "FlamingoBroker": "0xec268e9c642b7d09d10fe658bcb1cc63c0895d4d",
+    "FlamingoSwapPairWhiteList": "0xfb75a5314069b56e136713d38477f647a13991b4",
+    "FlamingoSwapFactory": "0xca2d20610d7982ebe0bed124ee7e9b2d580a6efc",
+    "FlamingoSwapRouter": "0xde3a4b093abbd07e9a69cdec88a54d9a1fe14975",
+    "FlamingoSwapPair": [
+      {
+        "name": "FLPGMFUSD",
+        "baseToken": "0x9b049f1283515eef1d3f6ac610e1595ed25ca3e9",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x43794acaca6cc28736c4eea63a6939de53c32e53",
+        "pairId": 1,
+        "treeBitLength": "15",
+        "pricePrecision": "1000000000000"
+      },
+      {
+        "name": "FLPBNEOFLM",
+        "baseToken": "0x48c40d4666f93408be1bef038b6722404d9a4c2a",
+        "quoteToken": "0xf0151f528127558851b39c2cd8aa47da7418ab28",
+        "hash": "0x4d5a85b0c83777df72cfb665a933970e4e20c0ec",
+        "pairId": 2,
+        "treeBitLength": "14",
+        "pricePrecision": "1000000000000000000"
+      },
+      {
+        "name": "FLPFLMWBTC",
+        "baseToken": "0xf0151f528127558851b39c2cd8aa47da7418ab28",
+        "quoteToken": "0x4548a3bcb3c2b5ce42bf0559b1cf2f1ec97a51d0",
+        "hash": "0x73eab0fdd097c3b37aabeee37946458cfe2e523e",
+        "pairId": 3,
+        "treeBitLength": "11",
+        "pricePrecision": "10000000000"
+      },
+      {
+        "name": "FLPFLMFUSD",
+        "baseToken": "0xf0151f528127558851b39c2cd8aa47da7418ab28",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xaeae872ace15f87c117213c92c00944af789aed2",
+        "pairId": 4,
+        "treeBitLength": "15",
+        "pricePrecision": "100000000000000"
+      },
+      {
+        "name": "FLPWETHFUSD",
+        "baseToken": "0xd3a41b53888a733b549f5d4146e7a98d3285fa21",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xb9f87cb4f741bc5dc299132fe1b8372f01d37ca4",
+        "pairId": 5,
+        "treeBitLength": "14",
+        "pricePrecision": "10000000000000000000"
+      },
+      {
+        "name": "FLPSWTHFUSD",
+        "baseToken": "0x78e1330db47634afdb5ea455302ba2d12b8d549f",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x23a16fd44773cc51f404d92fc6a26a81d3918a08",
+        "pairId": 6,
+        "treeBitLength": "14",
+        "pricePrecision": "10000000000000"
+      },
+      {
+        "name": "FLPONTFUSD",
+        "baseToken": "0x0a1328bffb804ad7bb342673da82a972cc7af86c",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xde1908bbcfa2aabf2727d241fa306bb668ebb35e",
+        "pairId": 7,
+        "treeBitLength": "14",
+        "pricePrecision": "1000000000000000"
+      },
+      {
+        "name": "FLPBNBFUSD",
+        "baseToken": "0x00fb9575f220727f71a1537f75e83af9387628ff",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xcfb958afaa82dc0923486524246bdad08ab9c6ae",
+        "pairId": 8,
+        "treeBitLength": "15",
+        "pricePrecision": "1000000000000000000"
+      },
+      {
+        "name": "FLPCAKEFUSD",
+        "baseToken": "0x570c27653683788177f05740257d88fed76bf74b",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x495bb94a16c321f82cf70fc0d1182340aa9387fe",
+        "pairId": 9,
+        "treeBitLength": "14",
+        "pricePrecision": "10000000000000000"
+      },
+      {
+        "name": "FLPWINGFUSD",
+        "baseToken": "0x948a60635d1f7921063d04be8f6cb35c741df566",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xd849d138824190bcb3ec54b38de656760d2cd578",
+        "pairId": 10,
+        "treeBitLength": "14",
+        "pricePrecision": "10000000000000000"
+      },
+      {
+        "name": "FLPGASFUSD",
+        "baseToken": "0xd2a4cff31913016155e38e474a2c06d08be276cf",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x2f6ef6baaf7a9129cf0edf364798e75d5ee5eaf0",
+        "pairId": 11,
+        "treeBitLength": "14",
+        "pricePrecision": "10000000000000000"
+      },
+      {
+        "name": "FLPWBTCFUSD",
+        "baseToken": "0x4548a3bcb3c2b5ce42bf0559b1cf2f1ec97a51d0",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xf7ba0fc88dd66dc39bfbaa7edefc255cd262b8df",
+        "pairId": 12,
+        "treeBitLength": "16",
+        "pricePrecision": "10000000000000000000"
+      },
+      {
+        "name": "FLPUSDTFUSD",
+        "baseToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "quoteToken": "0x68b938cc42b6a2d54fb9040f5facf4290ebb8c5f",
+        "hash": "0x9ef4d5c1a686e13d72184b66e4bda77d7b4bae9f",
+        "pairId": 13,
+        "treeBitLength": "11",
+        "pricePrecision": "1000000000000000"
+      },
+      {
+        "name": "FLPBNEOFUSD",
+        "baseToken": "0x48c40d4666f93408be1bef038b6722404d9a4c2a",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x3269ece5dc33adf17ed14be7780693f3c8b102d1",
+        "pairId": 14,
+        "treeBitLength": "13",
+        "pricePrecision": "100000000000000000"
+      },
+      {
+        "name": "FLPBNEOGAS",
+        "baseToken": "0x48c40d4666f93408be1bef038b6722404d9a4c2a",
+        "quoteToken": "0xd2a4cff31913016155e38e474a2c06d08be276cf",
+        "hash": "0x3244fcadcccff190c329f7b3083e4da2af60fbce",
+        "pairId": 15,
+        "treeBitLength": "12",
+        "pricePrecision": "10000000000000000"
+      },
+      {
+        "name": "FLPFUSDNUDES",
+        "baseToken": "0x340720c7107ef5721e44ed2ea8e314cce5c130fa",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0xe0e75fcfbbeeffd289756592d0bb208227661a86",
+        "pairId": 16,
+        "treeBitLength": "16",
+        "pricePrecision": "1000000"
+      },
+      {
+        "name": "FLPFUSDFRANK",
+        "baseToken": "0xa06cfd7ae9dd7befb7bf8e5b8c5902c969182de0",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x21a12c3b359af44636b1c5647e2684fef934cada",
+        "pairId": 17,
+        "treeBitLength": "16",
+        "pricePrecision": "1000000000000000"
+      },
+      {
+        "name": "FLPFUSDNDMEME",
+        "baseToken": "0x57d1761945697a2257be76b756dcc9c19b512ff1",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x6ef8beae3586634426bbdd56f6bee310589889a3",
+        "pairId": 18,
+        "treeBitLength": "16",
+        "pricePrecision": "10000000000000"
+      },
+      {
+        "name": "FLPFUSDFDE",
+        "baseToken": "0x9770f4d78a19d1a6fa94b472bcedffcc06b56c49",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x66d138dfd9506f0132983cd0d6ba731b65da48b9",
+        "pairId": 19,
+        "treeBitLength": "16",
+        "pricePrecision": "1000000000000"
+      },
+      {
+        "name": "FLPFUSDSOM",
+        "baseToken": "0x2d4c6cf0417209a7eb410160344e224e74f87195",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x3860e44de972d7bef817a0840fa12b218c8fcb1f",
+        "pairId": 20,
+        "treeBitLength": "16",
+        "pricePrecision": "100000000000"
+      },
+      {
+        "name": "FLPFUSDCANDY",
+        "baseToken": "0x88da18a5bca86ec8206d9b4960a7d0c4355a432f",
+        "quoteToken": "0x1005d400bcc2a56b7352f09e273be3f9933a5fb1",
+        "hash": "0x323a153cd845781b1c580ec8139ae683272366c2",
+        "pairId": 21,
+        "treeBitLength": "16",
+        "pricePrecision": "100000000000"
+      }
+    ]
+  }
+}

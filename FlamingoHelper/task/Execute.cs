@@ -55,33 +55,38 @@ namespace FlamingoHelper
                 return;
             }
 
+            if(action == "addRouterToWhiteList"){
+                WhiteList.GetInstance(rpcClient, keyPair).AddRouter(Router.GetInstance(rpcClient, keyPair).Hash, true);
+                return;
+            }
+
             //helperConfig.deployedContracts.FlamingoSwapPair是一个数组格式
             //根据pairid找到对应的pair
             Func<dynamic, bool> predicate = p => (int)p.pairId == (int)pairId;
             var pair = ((IEnumerable<dynamic>)helperConfig.deployedContracts.FlamingoSwapPair).FirstOrDefault(predicate);
-            if(pair == null){
-                throw new Exception("pair not found");
-            }
+            // if(pair == null){
+            //     throw new Exception("pair not found");
+            // }
 
             if(action == "registPair"){
                 var currentPairCounter = Broker.GetInstance(rpcClient, keyPair).GetPairCounter() + 1;
+
                 if(currentPairCounter != pairId){
                     throw new Exception("pairId not match");
                 }
                 Pair.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(pair.hash.ToString()));
                 
                 
-                Factory.GetInstance(rpcClient, keyPair).CreateExchangePair(UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), UInt160.Parse(pair.hash.ToString()));
-                Pair.GetInstance(rpcClient, keyPair).SetWhiteListContract(UInt160.Parse(whiteListHash));
-
+                // Factory.GetInstance(rpcClient, keyPair).CreateExchangePair(UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), UInt160.Parse(pair.hash.ToString()));
+                // Pair.GetInstance(rpcClient, keyPair).SetWhiteListContract(UInt160.Parse(whiteListHash));
                 var bytes = Broker.GetInstance(rpcClient, keyPair).AddPair(UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), BigInteger.Parse(pair.treeBitLength.ToString()), BigInteger.Parse(pair.pricePrecision.ToString()), false);
                 bytes = Broker.GetInstance(rpcClient, keyPair).UnpausePairOrderTrading(pairId, false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).UnpausePairOrderManagement(pairId, false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenDeposit(UInt160.Parse(pair.baseToken.ToString()), false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenDeposit(UInt160.Parse(pair.quoteToken.ToString()), false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenWithdraw(UInt160.Parse(pair.baseToken.ToString()), false, bytes);
-                bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenWithdraw(UInt160.Parse(pair.quoteToken.ToString()), false, bytes);
-                Broker.GetInstance(rpcClient, keyPair).SetGasToBurn(pairId, 3600000, true, bytes);
+                bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenWithdraw(UInt160.Parse(pair.quoteToken.ToString()), true, bytes);
+                // Broker.GetInstance(rpcClient, keyPair).SetGasToBurn(pairId, 3600000, true, bytes);
                 return;
             }
             if (action == "addPair"){
@@ -137,8 +142,13 @@ namespace FlamingoHelper
             }
 
             if(action == "addLiquidity"){
-                var sender = keyPair.GetScriptHash().ToString();
-                Router.GetInstance(rpcClient, keyPair).AddLiquidity(UInt160.Parse(sender), UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), BigInteger.Parse(args[0].ToString()), BigInteger.Parse(args[1].ToString()), 0, 0);
+                var sender = keyPair.GetScriptHash();
+                Router.GetInstance(rpcClient, keyPair).AddLiquidity(sender, UInt160.Parse(pair.baseToken.ToString()), UInt160.Parse(pair.quoteToken.ToString()), BigInteger.Parse(args[0].ToString()), BigInteger.Parse(args[1].ToString()), 0, 0);
+                return;
+            }
+
+            if(action == "addModerator"){
+                Broker.GetInstance(rpcClient, keyPair).AddModerator(UInt160.Parse(args[0].ToString()), true);
                 return;
             }
 

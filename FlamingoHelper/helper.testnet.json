@@ -2,16 +2,16 @@
   "network": "testnet",
   "url": "http://seed1t5.neo.org:20332",
   "deployedContracts": {
-    "FlamingoBroker": "0x54090e949948577cda1a25f4a9f1ca56f03f5755",
+    "FlamingoBroker": "0x34f76217b381856f3c0854178b2d8810b70655a5",
     "FlamingoSwapPairWhiteList": "0x3e35051d92af48e1be59c18383a809a1b643cd9b",
-    "FlamingoSwapFactory": "0x03a7ed77cda832e6f8681ba1745fab3d172b3bf4",
-    "FlamingoSwapRouter": "0xde2c739239b84f7adad51b0f1717ee3dff81eb4c",
+    "FlamingoSwapFactory": "0x44a3205ca474cf79906e9a82b38e6f7a3a4e95ce",
+    "FlamingoSwapRouter": "0x89e68291c33de277a8ff89905d37b02f9fc5a9ea",
     "FlamingoSwapPair": [
       {
-        "name": "FLPTEST2USDCrc7",
-        "baseToken": "0xf419d6f93da6de039e5d84f644680ddb86d6bfdf",
-        "quoteToken": "0xe62176f6b6a77439a834a4bfddb8bd41e2bf0b53",
-        "hash": "0x9056a68d8f48e2148e8fb9481428dc44296d46c6",
+        "name": "FLPBNEOGAS",
+        "baseToken": "0x85deac50febfd93988d3f391dea54e8289e43e9e",
+        "quoteToken": "0xcd48b160c1bbc9d74997b803b9a7ad50a4bef020",
+        "hash": "0x0ed459a0bd5b7a846dc40e222c466c3b2f973fd1",
         "pairId": 1,
         "treeBitLength": "16",
         "pricePrecision": "10000000000"

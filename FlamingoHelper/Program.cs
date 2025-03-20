@@ -31,10 +31,14 @@ namespace FlamingoHelper
             if (env == "testnet")
             {
                 File.Copy("config.testnet.json", "config.json", true);
+                //把bin/Debug/net8.0/config.json 也替换了
+                File.Copy("config.testnet.json", "bin/Debug/net8.0/config.json", true);
             }
             else
             {
                 File.Copy("config.mainnet.json", "config.json", true);
+                //把bin/Debug/net8.0/config.json 也替换了
+                File.Copy("config.mainnet.json", "bin/Debug/net8.0/config.json", true);
             }
 
             //args[1] 是操作指令 deploy代表重新部署并初始化合约, test表示运行测试程序
@@ -46,8 +50,8 @@ namespace FlamingoHelper
             }
             if(action == "deploy")
             {
-                Console.WriteLine(Path.Combine(Util.GetProjectDirectory(), $"external/flamingo-sc/src/Flamingo.{args[2]}"));
-                if (args[2] != "all" && !Directory.Exists(Path.Combine(Util.GetProjectDirectory(), $"external/flamingo-sc/src/Flamingo.{ args[2]}")))
+                Console.WriteLine(Path.Combine(Util.GetProjectDirectory(), $"external/flamingo-sc-monorepo/src/Flamingo.{args[2]}"));
+                if (args[2] != "all" && !Directory.Exists(Path.Combine(Util.GetProjectDirectory(), $"external/flamingo-sc-monorepo/src/Flamingo.{ args[2]}")))
                 {
                     Console.WriteLine("合约不存在");
                     return;

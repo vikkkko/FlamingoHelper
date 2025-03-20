@@ -10,7 +10,7 @@
       "Path": "Data_LevelDB_{0}"
     },
     "P2P": {
-      "Port": 20333,
+      "Port": 10333,
       "MinDesiredConnections": 10,
       "MaxConnections": 40,
       "MaxConnectionsPerAddress": 3
@@ -28,7 +28,7 @@
     }
   },
   "ProtocolConfiguration": {
-    "Network": 894710606,
+    "Network": 860833102,
     "AddressVersion": 53,
     "StandbyValidators": [
       "023e9b32ea89b94d066e649b124fd50e396ee91369e8e2a6ae1b11c170d022256d",
@@ -40,11 +40,11 @@
       "030205e9cefaea5a1dfc580af20c8d5aa2468bb0148f1a5e4605fc622c80e604ba"
     ],
     "SeedList": [
-      "seed1.neo.org:20332",
-      "seed2.neo.org:20332",
-      "seed3.neo.org:20332",
-      "seed4.neo.org:20332",
-      "seed5.neo.org:20332"
+      "seed1.neo.org:10332",
+      "seed2.neo.org:10332",
+      "seed3.neo.org:10332",
+      "seed4.neo.org:10332",
+      "seed5.neo.org:10332"
     ],
     "MillisecondsPerBlock": 15000,
     "ValidatorsCount": 7,
