@@ -39,12 +39,13 @@ namespace FlamingoHelper
             var factoryHash = helperConfig.deployedContracts["FlamingoSwapFactory"].ToString();
             var routerHash = helperConfig.deployedContracts["FlamingoSwapRouter"].ToString();
             var whiteListHash = helperConfig.deployedContracts["FlamingoSwapPairWhiteList"].ToString();
+            var flocksHash = helperConfig.deployedContracts["FLOCKS"].ToString();
             
             Broker.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(brokerHash));
             Factory.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(factoryHash));
             Router.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(routerHash));
             WhiteList.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(whiteListHash));
-
+            Flocks.GetInstance(rpcClient, keyPair).Init(UInt160.Parse(flocksHash));
 
             if (action == "reset"){
                 var bytes = Broker.GetInstance(rpcClient, keyPair).ChangeAMMFactory(Factory.GetInstance(rpcClient, keyPair).Hash, false);
@@ -86,7 +87,38 @@ namespace FlamingoHelper
                 bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenDeposit(UInt160.Parse(pair.quoteToken.ToString()), false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenWithdraw(UInt160.Parse(pair.baseToken.ToString()), false, bytes);
                 bytes = Broker.GetInstance(rpcClient, keyPair).EnableTokenWithdraw(UInt160.Parse(pair.quoteToken.ToString()), true, bytes);
-                // Broker.GetInstance(rpcClient, keyPair).SetGasToBurn(pairId, 3600000, true, bytes);
+                // Broker.GetInstance(rpcClient, keyPair).SetGasToBurn(pairId, 3600000, true, bytes);           
+                return;
+            }
+
+            if (action == "addTokenToWhitelist"){
+                var bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0x1005d400bcc2a56b7352f09e273be3f9933a5fb1"), 0, false);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0xf0151f528127558851b39c2cd8aa47da7418ab28"), 4, false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0xd2a4cff31913016155e38e474a2c06d08be276cf"), 11, false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0x4548a3bcb3c2b5ce42bf0559b1cf2f1ec97a51d0"), 12, false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0xd3a41b53888a733b549f5d4146e7a98d3285fa21"), 5, false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0x48c40d4666f93408be1bef038b6722404d9a4c2a"), 14, false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddTokenToWhitelist(UInt160.Parse("0x00fb9575f220727f71a1537f75e83af9387628ff"), 8, false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).AddAccountToBlacklist(UInt160.Parse("0xec268e9c642b7d09d10fe658bcb1cc63c0895d4d"), true, bytes);
+                return;
+            }
+             if (action == "changeFeeCollector"){
+                var bytes = Broker.GetInstance(rpcClient, keyPair).ChangeFeeCollector(UInt160.Parse(flocksHash), true);
+                return;
+            }
+            if (action == "depositToSettlementFund"){
+                var bytes = Flocks.GetInstance(rpcClient, keyPair).DepositToSettlementFund(UInt160.Parse("0xad4e27f46f3a38d1ac3c381b149020142d7df290"), 100000000000, true);
+                return;
+            }
+            if (action == "changeProfitSpeedFLM"){
+                var bytes = Flocks.GetInstance(rpcClient, keyPair).ChangeProfitSpeedFLM(5000000, true);
+                return;
+            }
+            if (action == "unpauseFlocks"){
+                var bytes = Flocks.GetInstance(rpcClient, keyPair).UnpauseMint(false);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).UnpauseBurn(false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).UnpauseWithdraw(false, bytes);
+                bytes = Flocks.GetInstance(rpcClient, keyPair).UnpauseClaim(false, bytes);
                 return;
             }
             if (action == "addPair"){

@@ -389,5 +389,21 @@ namespace FlamingoHelper
             }   
             return script;
         }
+
+        public byte[] ChangeFeeCollector(UInt160 newFeeCollector, bool send = true, byte[] _script = null)
+        {
+            byte[] script = _script ?? new byte[0];
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                sb.EmitDynamicCall(Hash, "changeFeeCollector", newFeeCollector);
+                script = script.Concat(sb.ToArray()).ToArray();
+            }
+            if(send)
+            {
+                Signer[] signers = new[] { new Signer { Scopes = WitnessScope.Global, Account = keyPair.GetScriptHash() } };
+                Util.SignAndSendTx(_rpcClient, script, signers, null, keyPair);
+            }   
+            return script;
+        }
     }
 }

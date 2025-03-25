@@ -53,6 +53,10 @@ namespace FlamingoHelper
             {
                 Router.GetInstance(rpcClient, keyPair).Deploy(network);
             }
+            else if (contractName == "Flocks")
+            {
+                Flocks.GetInstance(rpcClient, keyPair).Deploy(network);
+            }
         }
 
 
